@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { GenderEnum, ProviderEnum } from "../../common/enum/user.enum.js";
+import { RoleEnum,GenderEnum, ProviderEnum } from "../../common/enum/user.enum.js";
 
 
 const userSchema = new mongoose.Schema({
@@ -26,13 +26,15 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type: String,
-        required: true,
-        minLength: 6,
+        // required: function(){
+        //     return this.provider == ProviderEnum.google ? false : true;
+        // },
+        // minLength: 6,
         trim: true
     },
     age:{
         type: Number,
-        required: true,
+        // required: true,
         min: 18,
         max: 100
     },
@@ -43,21 +45,38 @@ const userSchema = new mongoose.Schema({
         default:GenderEnum.male
     },phone:{
         type: String,
-        required: true,
+        // required: true,
+        profilePicture: String,
+        confirmed : Boolean,
         min: 18,
         max: 100
     },
     profileImage: String,
-    confirmed : Boolean
-},{
-    timestamps: true,
-    strictQuery:true,
+    confirmed : Boolean,
     provider: {
         type: String,
         enum: Object.values(ProviderEnum),
         default: ProviderEnum.system
+    }, role: {
+        type: String,
+        enum: Object.values(RoleEnum),
+        default: RoleEnum.user
     }
-})
+}
+,{
+    timestamps: true,
+    strictQuery:true,
+    // provider: {
+    //     type: String,
+    //     enum: Object.values(ProviderEnum),
+    //     default: ProviderEnum.system
+    // }, role: {
+    //     type: String,
+    //     enum: Object.values(RoleEnum),
+    //     default: RoleEnum.user
+    // }
+}
+)
 
 userSchema.virtual("userName").get(function(){
  return `${this.firstName} ${this.LastName}`;

@@ -1,14 +1,19 @@
+
 import express from "express";
 import checkConnection from "./DB/connectionDB.js";
 import userRouter from "./modules/users/user.controller.js";
+import cors from "cors";
+import { PORT } from "../config/config.service.js";
 const app = express();
-const PORT = 3000;
+const port = PORT;
 
 
 const bootstrap =  () =>{
-app.use(express.json());
+  // console.log(typeof process.env.PORT);
+  app.use(cors(),express.json());
 
 app.get("/", (req, res) => {
+
  res.status(200).json({ message:"Hello, World!"});
 });
 

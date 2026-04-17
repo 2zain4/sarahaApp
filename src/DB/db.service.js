@@ -18,6 +18,10 @@ export const findOne =  async ({ model, filter ={}, options={} } = {}) => {
   return await doc.exec();
 }
 
+export const findById = async ({ model, id, select = "" }) => {
+    return await model.findById(id).select(select);
+};
+
 export const find =  async ({ model, filter ={}, options={} } = {}) => {
   const doc = model.find(filter)
  if (options.populate) {
